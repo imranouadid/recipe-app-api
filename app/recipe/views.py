@@ -11,7 +11,6 @@ from core.models import Ingredient
 class TagViewSet(viewsets.GenericViewSet,
                  mixins.ListModelMixin,
                  mixins.CreateModelMixin):
-
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Tag.objects.all()
@@ -27,7 +26,8 @@ class TagViewSet(viewsets.GenericViewSet,
 
 
 # Manage ingredients in database
-class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
+                        mixins.CreateModelMixin):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Ingredient.objects.all()
@@ -36,3 +36,7 @@ class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     # Return object for the current authenticated user
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('-name')
+
+    # Create a new ingredient
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
