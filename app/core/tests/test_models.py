@@ -26,9 +26,9 @@ class ModelTests(TestCase):
     def test_new_user_email_normalized(self):
         email = 'imran.ouadid@GMAIL.com'
         user = get_user_model().objects.create_user(
-                                            email=email,
-                                            password='testpass123'
-                                        )
+            email=email,
+            password='testpass123'
+        )
 
         self.assertEqual(user.email, email.lower())
 
@@ -63,3 +63,14 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(ingredient), ingredient.name)
+
+    # Test the recipe string representation
+    def test_recipe_str(self):
+        recipe = models.Recipe.objects.create(
+            user=sample_user(),
+            title='This is a title',
+            time_minutes=4,
+            price=400,
+        )
+
+        self.assertEqual(str(recipe), recipe.title)
