@@ -44,3 +44,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     # Retrieve the recipes for the authenticated user
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.RecipeDetailSerializer
+
+        return self.serializer_class
