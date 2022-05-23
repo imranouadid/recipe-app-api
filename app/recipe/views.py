@@ -17,7 +17,13 @@ class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
 
     # Return objects for the current authenticated user only
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user).order_by('-name')
+        assigned_only = bool(self.request.query_params.get('assigned_only'))
+        queryset = self.queryset
+
+        if assigned_only:
+            queryset = queryset.filter(recipe__isnull=False)
+
+        return queryset.filter(user=self.request.user).order_by('-name')
 
     # Create a new tag
     def perform_create(self, serializer):
