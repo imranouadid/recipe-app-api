@@ -9,9 +9,9 @@ from core.models import Ingredient, Recipe, Tag
 
 
 # Base viewset for user owned recipe attributes
-class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
-                            mixins.ListModelMixin,
-                            mixins.CreateModelMixin):
+class BaseRecipeAttrViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
+                            mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                            mixins.RetrieveModelMixin):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 

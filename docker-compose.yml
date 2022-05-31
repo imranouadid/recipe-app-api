@@ -13,10 +13,12 @@ services:
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
+      - DEBUG=1
       - DB_HOST=db
       - DB_NAME=app
       - DB_USER=imran
       - DB_PASS=97900xmen
+      - SECRET_KEY=ThisIsASecretKeyForDev
     depends_on:
       - db
 
